@@ -7,8 +7,6 @@ logging:
     org.springframework.security: DEBUG
   path: ./logs
 security:
-#  user:
-#    password: password
   oauth2:
     client:
       client-id: acme

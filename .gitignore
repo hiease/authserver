@@ -1,0 +1,22 @@
+logs/
+dist/
+node_modules/
+
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+.gradle
+build/
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
