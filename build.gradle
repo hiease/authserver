@@ -1,0 +1,62 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+    }
+}
+
+ext {
+    snippetsDir = file("$buildDir/generated-snippets")
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+group = 'com.hiease'
+version = '1.0.0'
+
+description = """authserver"""
+
+springBoot {
+    classifier = 'exec'
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+jar {
+   baseName = 'authserver'
+   version = '1.0.0'
+    from('./frontend/dist') {
+        into 'static'
+    }
+    dependsOn(':frontend:assemble')
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
+}
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.security.oauth:spring-security-oauth2")
+    compile("org.springframework.security:spring-security-jwt")
+    compile('mysql:mysql-connector-java')
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
