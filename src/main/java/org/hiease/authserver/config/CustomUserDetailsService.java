@@ -36,13 +36,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 	public Collection<? extends GrantedAuthority> getAuthorities(User user) {
+		String authorities="ROLE_USER";
 	    if (user != null) {
 	        String userAdmin = user.getIsAdmin();
 	        if (userAdmin != null && userAdmin.equals("Y")) {
-	            return AuthorityUtils.createAuthorityList("ROLE_ADMIN");
+                authorities += ",ROLE_ADMIN";
+//	            return AuthorityUtils.createAuthorityList("ROLE_ADMIN");
 	        }
 	    }
-		return AuthorityUtils.createAuthorityList("ROLE_USER");
+		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 	}
 
 	private String getClientIP() {

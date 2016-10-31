@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -15,9 +16,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Bean
+    CorsFilter corsFilter() {
+        CorsFilter filter = new CorsFilter();
+        return filter;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")

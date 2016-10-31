@@ -38,10 +38,10 @@ test {
 jar {
    baseName = 'authserver'
    version = '1.0.0'
-    from('./frontend/dist') {
-        into 'static'
-    }
-    dependsOn(':frontend:assemble')
+//    from('./frontend/dist') {
+//        into 'static'
+//    }
+//    dependsOn(':frontend:assemble')
 }
 
 sourceCompatibility = 1.8

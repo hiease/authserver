@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -21,11 +22,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SessionAttributes("authorizationRequest")
 public class AuthServerApplication extends WebMvcConfigurerAdapter {
 
-    @RequestMapping({ "/user", "/me" })
-    public Map<String, String> user(Principal principal) {
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", principal.getName());
-        return map;
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
     }
 
     @Override

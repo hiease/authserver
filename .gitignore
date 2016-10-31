@@ -1,6 +1,7 @@
 logs/
 dist/
 node_modules/
+application.yml
 
 ### STS ###
 .classpath

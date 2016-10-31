@@ -19,14 +19,14 @@ public class User extends BaseEntity {
 
     private String username;
     private String name;
-    private String sex;
+    private String gender;
     private String status;
     private String email;
     private String mobile;
     private String department;
     private String isAdmin;
 
-    //    @JsonIgnore
+    @JsonIgnore
     private String password;
 
     public void setPassword(String password) {
