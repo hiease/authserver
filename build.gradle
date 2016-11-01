@@ -48,10 +48,13 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenCentral()
     flatDir {
         dirs 'lib'
     }
+    maven {
+        url "http://maven.aliyun.com/nexus/content/groups/public/"
+    }
+    mavenCentral()
 }
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
@@ -60,6 +63,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.security.oauth:spring-security-oauth2")
+    compile("org.springframework.security:spring-security-data")
     compile("org.springframework.security:spring-security-jwt")
     compile('mysql:mysql-connector-java')
     compile('org.projectlombok:lombok:1.16.10')

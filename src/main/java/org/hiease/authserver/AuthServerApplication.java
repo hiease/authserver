@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @RestController
 @SessionAttributes("authorizationRequest")
+@EnableResourceServer
 public class AuthServerApplication extends WebMvcConfigurerAdapter {
 
     @RequestMapping("/user")
@@ -34,14 +35,14 @@ public class AuthServerApplication extends WebMvcConfigurerAdapter {
         registry.addViewController("/oauth/error").setViewName("oauth_error");
     }
 
-    @Configuration
-    @EnableResourceServer
-    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
-        }
-    }
+//    @Configuration
+//    @EnableResourceServer
+//    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+//        @Override
+//        public void configure(HttpSecurity http) throws Exception {
+//            http.antMatcher("/me").authorizeRequests().anyRequest().authenticated();
+//        }
+//    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthServerApplication.class, args);
