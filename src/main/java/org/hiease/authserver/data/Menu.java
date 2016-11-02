@@ -11,6 +11,12 @@ import java.util.List;
  * Created by qihaiyan on 2016/11/1.
  */
 
+enum MenuType {
+    heading,
+    toggle,
+    link
+}
+
 @Getter
 @Setter
 @ToString
@@ -19,7 +25,7 @@ public class Menu {
 
     private String name;
 
-    private final String type = "heading";
+    private final MenuType type = MenuType.heading;
 
     private List<ToggleMenu> children = new ArrayList<ToggleMenu>();
 
@@ -45,7 +51,7 @@ public class Menu {
 class ToggleMenu {
     private String name;
 
-    private final String type = "toggle";
+    private final MenuType type = MenuType.toggle;
 
     private List<PageMenu> pages = new ArrayList<PageMenu>();
 
@@ -57,7 +63,7 @@ class ToggleMenu {
 class PageMenu {
     private String name;
 
-    private final String type = "link";
+    private final MenuType type = MenuType.link;
 
     private String url;
 

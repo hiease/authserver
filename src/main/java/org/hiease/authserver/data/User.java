@@ -5,8 +5,8 @@ import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +28,9 @@ public class User extends BaseEntity {
 
     @JsonIgnore
     private String password;
+
+    @OneToMany(fetch= FetchType.LAZY, cascade= CascadeType.ALL, mappedBy="user")
+    private List<UserRole> userRoles;
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);

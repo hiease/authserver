@@ -20,7 +20,6 @@ public class Role extends BaseEntity {
     private String status;
     private String permission;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name="role_id")
-    private List<RoleResource> roleResources = new ArrayList<RoleResource>();
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy="role")
+    private List<RoleResource> roleResources;
 }

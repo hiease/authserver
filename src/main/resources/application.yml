@@ -4,7 +4,6 @@ server:
 logging:
   level:
     root: INFO
-#    org.springframework.security: DEBUG
   path: ./logs
 security:
   oauth2:
@@ -32,3 +31,6 @@ spring:
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+  data:
+    rest:
+      base-path: /api
