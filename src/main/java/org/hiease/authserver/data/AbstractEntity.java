@@ -1,6 +1,8 @@
 package org.hiease.authserver.data;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,10 +13,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.util.Date;
 
+@Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(generator="system-uuid")

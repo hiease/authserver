@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @Entity
-public class User extends BaseEntity {
+public class User extends AbstractEntity {
 
     public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 

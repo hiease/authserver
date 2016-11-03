@@ -5,14 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @NoArgsConstructor
-public class Resource extends BaseEntity {
+public class Resource extends AbstractEntity {
 
     private String moduleId;
 
@@ -29,4 +31,8 @@ public class Resource extends BaseEntity {
     private Integer order;
 
     private String icon;
+
+    @OneToMany(mappedBy="parentId")
+    @OrderColumn(name = "order")
+    private List<Resource> children = new LinkedList<Resource>();
 }

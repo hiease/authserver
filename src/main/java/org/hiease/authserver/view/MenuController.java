@@ -1,20 +1,29 @@
 package org.hiease.authserver.view;
 
 import org.hiease.authserver.data.Menu;
+import org.hiease.authserver.data.Resource;
+import org.hiease.authserver.data.ResourceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by qihaiyan on 2016/11/1.
  */
+
 @RestController
 public class MenuController {
+
+    @Autowired
+    ResourceRepository resourceRepository;
+
     /*
-	 菜单json格式：
+     菜单json格式：
 	                [{
 	                name: 'xxx',
 	                type: 'heading',
@@ -36,29 +45,41 @@ public class MenuController {
 	             */
     @RequestMapping("/menus")
     public List<Menu> menus() {
+        List<Resource> resources = resourceRepository.findByCurrentUser();
+        List<Resource> rootMenus = resources.stream()
+                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
+
         List<Menu> menus = new ArrayList<Menu>();
-        Menu menu = new Menu();
-        menu.init();
-        menus.add(menu);
+        for (Resource rootMenu : rootMenus) {
+            Menu menu = new Menu();
+            menu.setName(rootMenu.getName());
+            List<Resource> toggleMenus = resources.stream()
+                    .filter(resource -> resource.getParentId() == rootMenu.getId()).collect(Collectors.toList());
+            menu.addToggleMenu(toggleMenus);
+            menus.add(menu);
+        }
+//        buildMenu(menus);
+//        Menu menu = new Menu();
+//        menu.init();
+//        menus.add(menu);
         return menus;
     }
 
+//    private void buildMenu(TreeNode parentNode,long parentId) {
+//		// 构造当前节点的子节点
+//		List<Resource> childMenuInfoList = (List<AppAuthRoleRes>) CollectionUtils.select(menuInfos, new TreePredicate(parentId));
+//
+//		if (childMenuInfoList.size() > 0) {
+//			for (AppAuthRoleRes menuInfo : childMenuInfoList) {
+//				TreeNode treeNode = new DefaultTreeNode(menuInfo.getMenuInfo(),parentNode);
+//				menuMap.put(menuInfo.getMenuInfo(),treeNode);
+//				buildTreeNode(treeNode, menuInfo.getMenuInfo().getId());
+//			}
+//		}
+//	}
+
     /*
-    private void buildTreeNode(TreeNode parentNode,long parentId) {
-		// 构造当前节点的子节点
-		@SuppressWarnings("unchecked")
-		List<AppAuthRoleRes> childMenuInfoList = (List<AppAuthRoleRes>) CollectionUtils.select(menuInfos, new TreePredicate(parentId));
-
-		if (childMenuInfoList.size() > 0) {
-			for (AppAuthRoleRes menuInfo : childMenuInfoList) {
-				TreeNode treeNode = new DefaultTreeNode(menuInfo.getMenuInfo(),parentNode);
-				menuMap.put(menuInfo.getMenuInfo(),treeNode);
-				buildTreeNode(treeNode, menuInfo.getMenuInfo().getId());
-			}
-		}
-	}
-
-	private void buildMenuModel(TreeNode parentNode,DefaultSubMenu parentMenu) {
+    private void buildMenuModel(TreeNode parentNode,DefaultSubMenu parentMenu) {
 		List<TreeNode> subNodes = parentNode.getChildren();
 
 		if (subNodes.size() > 0) {

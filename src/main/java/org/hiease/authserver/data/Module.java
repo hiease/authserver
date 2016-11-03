@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @ToString
 @Entity
 @NoArgsConstructor
-public class Module extends BaseEntity{
+public class Module extends AbstractEntity {
 
     private String name;
 

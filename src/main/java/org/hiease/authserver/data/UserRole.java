@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @ToString
 @Entity
 @NoArgsConstructor
-public class UserRole extends BaseEntity {
+public class UserRole extends AbstractEntity {
     private String moduleId;
 
     @ManyToOne(fetch=FetchType.LAZY)

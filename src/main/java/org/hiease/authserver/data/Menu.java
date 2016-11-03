@@ -29,6 +29,14 @@ public class Menu {
 
     private List<ToggleMenu> children = new ArrayList<ToggleMenu>();
 
+    public void addToggleMenu(List<Resource> resources) {
+        for(Resource resource : resources) {
+            ToggleMenu toggleMenu = new ToggleMenu();
+            toggleMenu.setName(resource.getName());
+            this.getChildren().add(toggleMenu);
+        }
+    }
+
     public void init() {
         List<PageMenu> pages = new ArrayList<PageMenu>();
         PageMenu pageMenu1 = new PageMenu("page1","http://1");

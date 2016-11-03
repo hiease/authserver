@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 @ToString
 @Entity
 @NoArgsConstructor
-public class Department extends BaseEntity{
+public class Department extends AbstractEntity {
     private String name;
     private String level;
     private String parentId;

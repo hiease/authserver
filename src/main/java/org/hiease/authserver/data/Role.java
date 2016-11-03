@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,7 +13,7 @@ import java.util.List;
 @ToString
 @Entity
 @NoArgsConstructor
-public class Role extends BaseEntity {
+public class Role extends AbstractEntity {
     private String moduleId;
     private String name;
     private String status;

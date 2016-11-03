@@ -8,14 +8,13 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @NoArgsConstructor
-public class RoleResource extends BaseEntity {
+public class RoleResource extends AbstractEntity {
 
     private String moduleId;
 
