@@ -49,28 +49,17 @@ public class MenuController {
         List<Resource> rootMenus = resources.stream()
                 .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
 
-        List<Menu> menus = new ArrayList<Menu>();
-        for (Resource rootMenu : rootMenus) {
-            Menu menu = new Menu();
-            menu.setName(rootMenu.getName());
-            List<Resource> toggleMenus = resources.stream()
-                    .filter(resource -> resource.getParentId() == rootMenu.getId()).collect(Collectors.toList());
-            menu.addToggleMenu(toggleMenus);
-            menus.add(menu);
-        }
-//        buildMenu(menus);
-//        Menu menu = new Menu();
-//        menu.init();
-//        menus.add(menu);
-        return menus;
+        Menu menu = new Menu();
+        menu.buildMenu(menu, rootMenus);
+        return menu.getChildren();
     }
 
-//    private void buildMenu(TreeNode parentNode,long parentId) {
+//    private void buildMenu(Resource parent, int level) {
 //		// 构造当前节点的子节点
-//		List<Resource> childMenuInfoList = (List<AppAuthRoleRes>) CollectionUtils.select(menuInfos, new TreePredicate(parentId));
+//		List<Resource> children = parent.getChildren();
 //
-//		if (childMenuInfoList.size() > 0) {
-//			for (AppAuthRoleRes menuInfo : childMenuInfoList) {
+//		if (children.size() > 0) {
+//			for (Resource child : children) {
 //				TreeNode treeNode = new DefaultTreeNode(menuInfo.getMenuInfo(),parentNode);
 //				menuMap.put(menuInfo.getMenuInfo(),treeNode);
 //				buildTreeNode(treeNode, menuInfo.getMenuInfo().getId());

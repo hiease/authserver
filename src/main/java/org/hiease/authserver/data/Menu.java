@@ -17,38 +17,90 @@ enum MenuType {
     link
 }
 
-@Getter
-@Setter
-@ToString
 @NoArgsConstructor
 public class Menu {
-
     private String name;
 
-    private final MenuType type = MenuType.heading;
+    private MenuType type;
 
-    private List<ToggleMenu> children = new ArrayList<ToggleMenu>();
+    private List<Menu> children = new ArrayList<>();
 
-    public void addToggleMenu(List<Resource> resources) {
-        for(Resource resource : resources) {
-            ToggleMenu toggleMenu = new ToggleMenu();
-            toggleMenu.setName(resource.getName());
-            this.getChildren().add(toggleMenu);
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public MenuType getType() {
+        return type;
+    }
+
+    public void setType(MenuType type) {
+        this.type = type;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void buildMenu(Menu parent, List<Resource> resources) {
+        for (Resource resource : resources) {
+            Menu headMenu = new HeadMenu();
+            headMenu.setName(resource.getName());
+            headMenu.buildMenu(headMenu, resource.getChildren());
+            this.addChildren(headMenu);
         }
     }
 
-    public void init() {
-        List<PageMenu> pages = new ArrayList<PageMenu>();
-        PageMenu pageMenu1 = new PageMenu("page1","http://1");
-        PageMenu pageMenu2 = new PageMenu("page2","http://2");
-        pages.add(pageMenu1);
-        pages.add(pageMenu2);
-        ToggleMenu toggleMenu = new ToggleMenu();
-        toggleMenu.setName("toggle1");
-        toggleMenu.setPages(pages);
-        this.name = "main";
-        this.getChildren().add(toggleMenu);
+    public void addChildren(Menu child) {
+        children.add(child);
     }
+}
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+class HeadMenu extends Menu {
+
+    private final MenuType type = MenuType.heading;
+
+    private List<Menu> children = new ArrayList<>();
+
+    @Override
+    public void buildMenu(Menu parent, List<Resource> resources) {
+        for (Resource resource : resources) {
+            if (resource == null) continue;
+            if (resource.getChildren().size() > 0) {
+                Menu toggleMenu = new ToggleMenu();
+                toggleMenu.setName(resource.getName());
+                toggleMenu.buildMenu(toggleMenu, resource.getChildren());
+                this.addChildren(toggleMenu);
+            } else {
+                Menu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
+                this.addChildren(pageMenu);
+            }
+        }
+    }
+
+    public void addChildren(Menu child) {
+        children.add(child);
+    }
+
+//    public void init() {
+//        List<PageMenu> pages = new ArrayList<PageMenu>();
+//        PageMenu pageMenu1 = new PageMenu("page1","http://1");
+//        PageMenu pageMenu2 = new PageMenu("page2","http://2");
+//        pages.add(pageMenu1);
+//        pages.add(pageMenu2);
+//        ToggleMenu toggleMenu = new ToggleMenu();
+//        toggleMenu.setName("toggle1");
+//        toggleMenu.setPages(pages);
+//        this.name = "main";
+//        this.getChildren().add(toggleMenu);
+//    }
 
 }
 
@@ -56,28 +108,33 @@ public class Menu {
 @Setter
 @ToString
 @NoArgsConstructor
-class ToggleMenu {
-    private String name;
-
+class ToggleMenu extends Menu {
     private final MenuType type = MenuType.toggle;
+    private List<PageMenu> pages = new ArrayList<>();
 
-    private List<PageMenu> pages = new ArrayList<PageMenu>();
+    @Override
+    public void buildMenu(Menu parent, List<Resource> resources) {
+        for (Resource resource : resources) {
+            if (resource == null) continue;
+            Menu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
+            this.addChildren(pageMenu);
+        }
+    }
 
+    public void addChildren(PageMenu child) {
+        pages.add(child);
+    }
 }
 
 @Getter
 @Setter
 @ToString
-class PageMenu {
-    private String name;
-
+class PageMenu extends Menu {
     private final MenuType type = MenuType.link;
-
     private String url;
 
     PageMenu(String name, String url) {
         this.setName(name);
         this.setUrl(url);
     }
-
 }
