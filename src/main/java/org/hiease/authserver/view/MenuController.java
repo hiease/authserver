@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,51 +51,4 @@ public class MenuController {
         menu.buildMenu(menu, rootMenus);
         return menu.getChildren();
     }
-
-//    private void buildMenu(Resource parent, int level) {
-//		// 构造当前节点的子节点
-//		List<Resource> children = parent.getChildren();
-//
-//		if (children.size() > 0) {
-//			for (Resource child : children) {
-//				TreeNode treeNode = new DefaultTreeNode(menuInfo.getMenuInfo(),parentNode);
-//				menuMap.put(menuInfo.getMenuInfo(),treeNode);
-//				buildTreeNode(treeNode, menuInfo.getMenuInfo().getId());
-//			}
-//		}
-//	}
-
-    /*
-    private void buildMenuModel(TreeNode parentNode,DefaultSubMenu parentMenu) {
-		List<TreeNode> subNodes = parentNode.getChildren();
-
-		if (subNodes.size() > 0) {
-			for (TreeNode subNode : subNodes) {
-				if(subNode.isLeaf()) {
-	    			AppMenuInfo menuInfo = (AppMenuInfo)subNode.getData();
-	    			 DefaultMenuItem item = new DefaultMenuItem(menuInfo.getMenuName());
-	    			 item.setIcon(menuInfo.getMenuIcon());
-	    			 item.setUpdate(":centerpanel");
-	    			 item.setCommand("#{menuView.setMainContent('"+menuInfo.getActionInfo().getActionUrl()+"')}");
-	 				 if(subNode.getParent()==rootTreeNode) {
-						 model.addElement(item);
-					 }
-	 				 else {
-		    			 parentMenu.addElement(item);
-	 				 }
-				}
-				else {
-					DefaultSubMenu submenu = new DefaultSubMenu(((AppMenuInfo)subNode.getData()).getMenuName());
-					if(subNode.getParent()==rootTreeNode) {
-						model.addElement(submenu);
-					}
-					else {
-						parentMenu.addElement(submenu);
-					}
-					buildMenuModel(subNode,submenu);
-				}
-			}
-		}
-	}
-     */
 }

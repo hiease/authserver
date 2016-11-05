@@ -88,20 +88,6 @@ class HeadMenu extends Menu {
     public void addChildren(Menu child) {
         children.add(child);
     }
-
-//    public void init() {
-//        List<PageMenu> pages = new ArrayList<PageMenu>();
-//        PageMenu pageMenu1 = new PageMenu("page1","http://1");
-//        PageMenu pageMenu2 = new PageMenu("page2","http://2");
-//        pages.add(pageMenu1);
-//        pages.add(pageMenu2);
-//        ToggleMenu toggleMenu = new ToggleMenu();
-//        toggleMenu.setName("toggle1");
-//        toggleMenu.setPages(pages);
-//        this.name = "main";
-//        this.getChildren().add(toggleMenu);
-//    }
-
 }
 
 @Getter
