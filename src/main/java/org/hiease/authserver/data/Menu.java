@@ -1,9 +1,7 @@
 package org.hiease.authserver.data;
 
 import lombok.*;
-import sun.jvm.hotspot.debugger.Page;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
