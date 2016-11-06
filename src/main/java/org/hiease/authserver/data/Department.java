@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ import javax.persistence.Entity;
 public class Department extends AbstractEntity {
     private String name;
     private String level;
-    private String parentId;
+    private UUID parentId;
     private String type;
     private String province;
     private String city;

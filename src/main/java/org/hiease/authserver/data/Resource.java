@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class Resource extends AbstractEntity {
 
     private String status;
 
-    private String parentId;
+    private UUID parentId;
 
     private Integer order;
 

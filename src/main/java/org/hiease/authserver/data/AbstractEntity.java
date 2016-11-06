@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,9 +22,10 @@ import java.util.Date;
 public abstract class AbstractEntity {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid2")
-    String id;
+//    @GeneratedValue(generator="system-uuid")
+//    @GenericGenerator(name="system-uuid", strategy = "uuid2")
+//    String id;
+    UUID id = UUID.randomUUID();
 
     @CreatedBy
     String createdBy;

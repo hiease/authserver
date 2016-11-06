@@ -2,6 +2,7 @@ package org.hiease.authserver.data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends PagingAndSortingRepository<User, String> {
+public interface UserRepository extends PagingAndSortingRepository<User, UUID> {
 	@Override
 	User save(@Param("user") User user);
 	User findByUsername(@Param("username") String username);

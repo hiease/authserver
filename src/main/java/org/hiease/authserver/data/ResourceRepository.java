@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ResourceRepository extends PagingAndSortingRepository<Resource, String> {
+public interface ResourceRepository extends PagingAndSortingRepository<Resource, UUID> {
 
 //    List<Resource> findByAppId(@Param("appId") String appId);
 //    List<Resource> findByAppIdOrderByShowOrder(@Param("appId") String appId);

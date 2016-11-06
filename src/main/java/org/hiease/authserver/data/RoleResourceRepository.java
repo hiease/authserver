@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface RoleResourceRepository extends CrudRepository<RoleResource, String> {
+public interface RoleResourceRepository extends CrudRepository<RoleResource, UUID> {
 
 //    List<RoleResource> findByAppIdAndRoleId(@Param("appId") String appId, @Param("roleId") String roleId);
 //    @Query("from MRoleMenu where roleId in (select roleId from MUserRole where userId = (select userId from MUser where userAlias = :userAlias)) order by appId, roleId")
