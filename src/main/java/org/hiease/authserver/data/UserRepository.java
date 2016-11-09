@@ -16,7 +16,11 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends PagingAndSortingRepository<User, UUID> {
 	@Override
 	User save(@Param("user") User user);
+
+	List<User> findAll();
+
 	User findByUsername(@Param("username") String username);
+
 	User findByUsernameAndStatus(@Param("username") String username, @Param("state") String state);
 
 //	@Query("select m.userRoles. from User m where m.user.username = ?#{principal}")

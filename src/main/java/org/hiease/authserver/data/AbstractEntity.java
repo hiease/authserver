@@ -25,7 +25,7 @@ public abstract class AbstractEntity {
 //    @GeneratedValue(generator="system-uuid")
 //    @GenericGenerator(name="system-uuid", strategy = "uuid2")
 //    String id;
-    UUID id = UUID.randomUUID();
+    final UUID id = UUID.randomUUID();
 
     @CreatedBy
     String createdBy;
@@ -44,11 +44,4 @@ public abstract class AbstractEntity {
     @Column(name = "tenant_id", nullable = false)
     Long tenantId;
 
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
 }

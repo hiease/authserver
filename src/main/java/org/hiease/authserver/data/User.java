@@ -8,10 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 @Entity
 public class User extends AbstractEntity {
 
