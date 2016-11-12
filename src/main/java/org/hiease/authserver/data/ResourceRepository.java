@@ -18,6 +18,6 @@ public interface ResourceRepository extends PagingAndSortingRepository<Resource,
     @Query("from Resource where parentId is null)")
     List<Resource> findRootResource();
 
-    @Query("from Resource where parentId=?1 and id in (select resource.id from RoleResource where role in (select role from UserRole where user.username = ?#{principal}))")
+    @Query("from Resource where parentId=?1")
     List<Resource> findByParent(@Param("parentId") Long parentId);
 }
