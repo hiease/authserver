@@ -16,7 +16,7 @@ import java.util.UUID;
 public class Department extends AbstractEntity {
     private String name;
     private String level;
-    private UUID parentId;
+    private Long parentId;
     private String type;
     private String province;
     private String city;

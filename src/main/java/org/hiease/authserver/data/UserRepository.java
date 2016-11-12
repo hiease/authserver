@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends PagingAndSortingRepository<User, UUID> {
+public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Override
 	User save(@Param("user") User user);
 

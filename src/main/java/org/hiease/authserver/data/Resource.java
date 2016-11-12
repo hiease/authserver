@@ -25,15 +25,13 @@ public class Resource extends AbstractEntity {
 
     private String type;
 
-    private String status;
+    private Long parentId;
 
-    private UUID parentId;
-
-    private Integer order;
+    private Integer showOrder;
 
     private String icon;
 
     @OneToMany(mappedBy="parentId")
-    @OrderColumn(name = "order")
+    @OrderColumn(name = "showOrder")
     private List<Resource> children = new LinkedList<Resource>();
 }
