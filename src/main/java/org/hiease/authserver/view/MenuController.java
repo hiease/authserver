@@ -18,9 +18,6 @@ public class MenuController {
     @Autowired
     ResourceRepository resourceRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
     /*
      菜单json格式：
 	                [{

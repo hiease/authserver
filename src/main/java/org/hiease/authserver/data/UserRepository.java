@@ -26,6 +26,9 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
 	User findByUsernameAndStatus(@Param("username") String username, @Param("state") String state);
 
-//	@Query("select m.userRoles. from User m where m.user.username = ?#{principal}")
-//	List<UserRole> findAllResourcesByCurrentUser();
+	@Modifying
+	@Query("update User u set u.password = :passwd where u.username = ?#{principal}")
+	@Transactional
+	void updateUserPasswd(@Param("passwd") String passwd);
+
 }
