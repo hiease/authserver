@@ -19,6 +19,9 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
 	List<User> findAll();
 
+	@Query("from User u where u.username = ?#{principal}")
+	User findCurrentUser();
+
 	User findByUsername(@Param("username") String username);
 
 	User findByUsernameAndStatus(@Param("username") String username, @Param("state") String state);

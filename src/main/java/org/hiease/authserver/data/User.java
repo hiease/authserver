@@ -26,8 +26,10 @@ public class User extends AbstractEntity {
     @JsonIgnore
     private String password;
 
-    @OneToMany(fetch= FetchType.LAZY, cascade= CascadeType.ALL, mappedBy="user")
-    private List<UserRole> userRoles;
+    @ManyToMany(cascade = { CascadeType.MERGE })
+    @JoinTable(name="user_role",joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="role_id"))
+    private List<Role> roles;
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @NoArgsConstructor
 public class Resource extends AbstractEntity {
@@ -30,6 +30,9 @@ public class Resource extends AbstractEntity {
     private Integer showOrder;
 
     private String icon;
+
+    @ManyToMany(mappedBy="resources")
+    private List<Role> roles;
 
     @OneToMany(mappedBy="parentId")
     @OrderColumn(name = "showOrder")

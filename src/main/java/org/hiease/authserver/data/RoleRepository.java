@@ -1,11 +1,18 @@
 package org.hiease.authserver.data;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    @Override
+    Role save(@Param("role") Role role);
 
-public interface RoleRepository extends CrudRepository<Role, Long> {
-//    List<Role> findByAppId(@Param("appId") String appId);
-//    @Query("from Role where appId = :appId and roleId in (select roleId from UserRole where appId = :appId and userId = :userId)")
-//    List<Role> findByAppIdAndUserId(@Param("appId") String appId, @Param("userId") String userId);
+//    @Modifying
+//    @Transactional
+//    @Query("delete from RoleResource u where u.role.id = ?1")
+//    void removeAllRole();
 }

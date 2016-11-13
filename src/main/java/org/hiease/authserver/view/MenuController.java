@@ -1,8 +1,6 @@
 package org.hiease.authserver.view;
 
-import org.hiease.authserver.data.Menu;
-import org.hiease.authserver.data.Resource;
-import org.hiease.authserver.data.ResourceRepository;
+import org.hiease.authserver.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +17,9 @@ public class MenuController {
 
     @Autowired
     ResourceRepository resourceRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     /*
      菜单json格式：
@@ -44,11 +45,11 @@ public class MenuController {
     @RequestMapping("/menus")
     public List<Menu> menus() {
         List<Resource> resources = resourceRepository.findByCurrentUser();
-        List<Resource> rootMenus = resources.stream()
-                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
+//        List<Resource> rootMenus = resources.stream()
+//                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
 
         Menu menu = new Menu();
-        menu.buildMenu(menu, rootMenus);
+        menu.buildMenu(menu, resources);
         return menu.getChildren();
     }
 }
