@@ -2,13 +2,14 @@ package org.hiease.authserver.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ResourceRepository extends JpaRepository<Resource, Long> {
+public interface ResourceRepository extends CrudRepository<Resource, Long> {
 
     @Override
     Resource save(@Param("resource") Resource resource);
