@@ -10,9 +10,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     @Override
     Role save(@Param("role") Role role);
-
-//    @Modifying
-//    @Transactional
-//    @Query("delete from RoleResource u where u.role.id = ?1")
-//    void removeAllRole();
 }
