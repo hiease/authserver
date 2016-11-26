@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@ToString(exclude = "password")
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class User extends AbstractEntity {
 
@@ -22,6 +24,7 @@ public class User extends AbstractEntity {
     private String mobile;
     private String department;
     private String isAdmin;
+    private String avatar;
 
     @JsonIgnore
     private String password;

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-//@ToString
+@ToString(exclude = "children")
 @Entity
 @NoArgsConstructor
 public class Resource extends AbstractEntity {

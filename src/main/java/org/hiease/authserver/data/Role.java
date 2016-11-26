@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-//@ToString
+@ToString(exclude = "resources")
 @Entity
 @NoArgsConstructor
 public class Role extends AbstractEntity {
