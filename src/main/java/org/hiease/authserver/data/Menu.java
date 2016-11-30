@@ -55,6 +55,7 @@ public class Menu {
     public void addChildren(Menu child) {
         children.add(child);
     }
+
 }
 
 @Getter
@@ -94,19 +95,20 @@ class HeadMenu extends Menu {
 @NoArgsConstructor
 class ToggleMenu extends Menu {
     private final MenuType type = MenuType.toggle;
-    private List<PageMenu> pages = new ArrayList<>();
+
+    private List<PageMenu> pages = new ArrayList<PageMenu>();
 
     @Override
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
-            Menu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
-            this.addChildren(pageMenu);
+            PageMenu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
+            this.addPages(pageMenu);
         }
     }
 
-    public void addChildren(PageMenu child) {
-        pages.add(child);
+    public void addPages(PageMenu child) {
+        this.pages.add(child);
     }
 }
 
