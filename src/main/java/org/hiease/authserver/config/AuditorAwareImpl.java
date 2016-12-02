@@ -20,10 +20,10 @@ public class AuditorAwareImpl implements AuditorAware<String> {
             return null;
         }
 
-        String username = (String) authentication.getPrincipal();
-        LOGGER.debug("Returning username: {}", username);
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        LOGGER.debug("Returning username: {}", user.getUsername());
 
-        return username;
+        return user.getUsername();
     }
 }
 

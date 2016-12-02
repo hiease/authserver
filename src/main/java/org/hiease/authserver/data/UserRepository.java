@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findAll();
 
-	@Query("from User u where u.username = ?#{principal}")
+	@Query("from User u where u.username = ?#{principal.username}")
 	User findCurrentUser();
 
 	User findByUsername(@Param("username") String username);
@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	User findByUsernameAndStatus(@Param("username") String username, @Param("state") String state);
 
 	@Modifying
-	@Query("update User u set u.password = :passwd where u.username = ?#{principal}")
+	@Query("update User u set u.password = :passwd where u.username = ?#{principal.username}")
 	@Transactional
 	void updateUserPasswd(@Param("passwd") String passwd);
 

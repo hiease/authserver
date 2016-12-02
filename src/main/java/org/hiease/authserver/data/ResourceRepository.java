@@ -7,14 +7,13 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface ResourceRepository extends CrudRepository<Resource, Long> {
+public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
     @Override
     Resource save(@Param("resource") Resource resource);
 
-    @Query("select r from Resource r inner join r.roles role where r.parentId is null and role.id in (select ur.id from User u inner join u.roles ur where u.username = ?#{principal})")
+    @Query("select r from Resource r inner join r.roles role where r.parentId is null and role.id in (select ur.id from User u inner join u.roles ur where u.username = ?#{principal.username})")
     List<Resource> findByCurrentUser();
 
     @Query("select r from Resource r inner join r.roles role where role.id = ?1")

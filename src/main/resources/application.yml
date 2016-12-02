@@ -4,14 +4,15 @@ server:
 logging:
   level:
     root: INFO
+    org.springframework.security: DEBUG
   path: ./logs
 security:
-  oauth2:
-    client:
-      client-id: acme
-      client-secret: acmesecret
-      scope: read,write
-      auto-approve-scopes: .*
+#  oauth2:
+#    client:
+#      client-id: acme
+#      client-secret: acmesecret
+#      scope: read,write
+#      auto-approve-scopes: .*
 spring:
   application:
     name: authserver

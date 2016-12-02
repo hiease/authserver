@@ -1,4 +1,4 @@
-package org.hiease.authserver.config;
+package org.hiease.authserver.security;
 
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
@@ -41,7 +41,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	        String userAdmin = user.getIsAdmin();
 	        if (userAdmin != null && userAdmin.equals("Y")) {
                 authorities += ",ROLE_ADMIN";
-//	            return AuthorityUtils.createAuthorityList("ROLE_ADMIN");
 	        }
 	    }
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);

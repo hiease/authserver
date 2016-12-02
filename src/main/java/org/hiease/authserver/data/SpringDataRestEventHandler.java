@@ -1,4 +1,4 @@
-package org.hiease.authserver.config;
+package org.hiease.authserver.data;
 
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
@@ -13,13 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RepositoryEventHandler(User.class)
 public class SpringDataRestEventHandler {
-
-//    private final UserRepository userRepository;
-//
-//    @Autowired
-//    public SpringDataRestEventHandler(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     @HandleBeforeCreate
     public void setDefaultPassword(User user) {
