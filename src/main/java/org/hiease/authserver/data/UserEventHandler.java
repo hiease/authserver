@@ -4,6 +4,7 @@ import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
+import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RepositoryEventHandler(User.class)
-public class SpringDataRestEventHandler {
+public class UserEventHandler {
 
     @HandleBeforeCreate
     public void setDefaultPassword(User user) {

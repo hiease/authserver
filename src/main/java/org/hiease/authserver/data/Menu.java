@@ -17,11 +17,22 @@ enum MenuType {
 
 @NoArgsConstructor
 public class Menu {
+
+    private Long id;
+
     private String name;
 
     private MenuType type;
 
     private List<Menu> children = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -46,6 +57,7 @@ public class Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             Menu headMenu = new HeadMenu();
+            headMenu.setId(resource.getId());
             headMenu.setName(resource.getName());
             headMenu.buildMenu(headMenu, resource.getChildren());
             this.addChildren(headMenu);
@@ -74,11 +86,12 @@ class HeadMenu extends Menu {
             if (resource == null) continue;
             if (resource.getChildren().size() > 0) {
                 Menu toggleMenu = new ToggleMenu();
+                toggleMenu.setId(resource.getId());
                 toggleMenu.setName(resource.getName());
                 toggleMenu.buildMenu(toggleMenu, resource.getChildren());
                 this.addChildren(toggleMenu);
             } else {
-                Menu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
+                Menu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
                 this.addChildren(pageMenu);
             }
         }
@@ -102,7 +115,7 @@ class ToggleMenu extends Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
-            PageMenu pageMenu = new PageMenu(resource.getName(), resource.getUrl());
+            PageMenu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
             this.addPages(pageMenu);
         }
     }
@@ -119,7 +132,8 @@ class PageMenu extends Menu {
     private final MenuType type = MenuType.link;
     private String url;
 
-    PageMenu(String name, String url) {
+    PageMenu(Long id, String name, String url) {
+        this.setId(id);
         this.setName(name);
         this.setUrl(url);
     }
