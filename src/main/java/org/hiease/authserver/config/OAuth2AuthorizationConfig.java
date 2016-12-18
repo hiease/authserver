@@ -27,21 +27,8 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private Environment env;
-
     @Autowired
     DataSource dataSource;
-
-//    @Bean
-//    public DataSource dataSource() {
-//        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(env.getProperty("spring.datasource.driverClassName"));
-//        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-//        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-//        dataSource.setPassword(env.getProperty("spring.datasource.password"));
-//        return dataSource;
-//    }
 
     @Bean
     public TokenStore tokenStore() {
@@ -91,6 +78,4 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")
                 .checkTokenAccess("isAuthenticated()");
     }
-
-
 }

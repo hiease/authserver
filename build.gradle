@@ -68,6 +68,7 @@ dependencies {
     compile("org.springframework.security:spring-security-jwt")
     compile('org.springframework.data:spring-data-rest-hal-browser')
     compile('mysql:mysql-connector-java')
+    compile('org.json:json:20160810')
     compile('org.projectlombok:lombok:1.16.10')
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }

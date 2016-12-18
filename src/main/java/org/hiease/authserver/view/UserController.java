@@ -2,7 +2,12 @@ package org.hiease.authserver.view;
 
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
+import org.hiease.authserver.security.CurrentUser;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
@@ -38,7 +43,7 @@ public class UserController {
     }
 
     @RequestMapping("/logout")
-    public void logout(Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         request.getSession().invalidate();
 
@@ -50,7 +55,9 @@ public class UserController {
     }
 
     @RequestMapping("/updatePasswd")
-    public void updatePasswd(@RequestBody String passwd) {
-        this.userRepository.updateUserPasswd(User.PASSWORD_ENCODER.encode(passwd));
+    public ResponseEntity<?> updatePasswd(@RequestBody String passwd) {
+        JSONObject jsonObject = new JSONObject(passwd);
+        this.userRepository.updateUserPasswd(jsonObject.getString("userName"), User.PASSWORD_ENCODER.encode(jsonObject.getString("userPass")));
+        return ResponseEntity.ok().body("{ \"result\": { \"success\": true, \"error\": null } }");
     }
 }

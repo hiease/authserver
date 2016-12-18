@@ -27,8 +27,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Page<User> findByUsernameContainsOrNameContainsOrMobileContains(@Param("username") String username, @Param("name") String name, @Param("mobile") String mobile, Pageable pageable);
 
 	@Modifying
-	@Query("update User u set u.password = :passwd where u.username = ?#{principal.username}")
+	@Query("update User u set u.password = :passwd where u.username = :username")
 	@Transactional
-	void updateUserPasswd(@Param("passwd") String passwd);
+	void updateUserPasswd(@Param("username") String username, @Param("passwd") String passwd);
 
 }
