@@ -60,7 +60,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .secret("acmesecret")
                 .authorities("ROLE_TRUSTED_CLIENT")
                 .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
-                .accessTokenValiditySeconds(3600)
+                .accessTokenValiditySeconds(36000)
                 .scopes("openid")
 //                .resourceIds("authserver")
                 .autoApprove(true);

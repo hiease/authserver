@@ -1,6 +1,7 @@
 package org.hiease.authserver.data;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,26 @@ enum MenuType {
 @NoArgsConstructor
 public class Menu {
 
+//    @Autowired
+//    UserRepository userRepository;
+
     private Long id;
 
     private String name;
 
     private MenuType type;
 
+    protected List<Resource> roleResources;
+
     private List<Menu> children = new ArrayList<>();
+
+    public void setRoleRes(List<Resource> resources){
+        this.roleResources = resources;
+    }
+
+//    public List<Resource> getRoleRes(){
+//        return this.roleResources;
+//    }
 
     public Long getId() {
         return id;
@@ -55,8 +69,12 @@ public class Menu {
     }
 
     public void buildMenu(Menu parent, List<Resource> resources) {
+
+//        this.roleResources = this.userRepository.findCurrentUser().getRoles().get(0).getResources();
+
         for (Resource resource : resources) {
             Menu headMenu = new HeadMenu();
+            headMenu.setRoleRes(this.roleResources);
             headMenu.setId(resource.getId());
             headMenu.setName(resource.getName());
             headMenu.buildMenu(headMenu, resource.getChildren());
@@ -68,6 +86,14 @@ public class Menu {
         children.add(child);
     }
 
+    public boolean isRoleMenu(Resource resource, List<Resource> roleResources){
+        for (Resource roleRes : roleResources) {
+            if (roleRes.getId().equals(resource.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 @Getter
@@ -84,8 +110,10 @@ class HeadMenu extends Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
+            if (!isRoleMenu(resource, this.roleResources)) continue;
             if (resource.getChildren().size() > 0) {
                 Menu toggleMenu = new ToggleMenu();
+                toggleMenu.setRoleRes(this.roleResources);
                 toggleMenu.setId(resource.getId());
                 toggleMenu.setName(resource.getName());
                 toggleMenu.buildMenu(toggleMenu, resource.getChildren());
@@ -115,6 +143,7 @@ class ToggleMenu extends Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
+            if (!isRoleMenu(resource, this.roleResources)) continue;
             PageMenu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
             this.addPages(pageMenu);
         }

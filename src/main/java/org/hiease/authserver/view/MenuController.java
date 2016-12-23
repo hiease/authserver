@@ -20,6 +20,9 @@ public class MenuController {
     @Autowired
     ResourceRepository resourceRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     /*
      菜单json格式：
 	                [{
@@ -43,11 +46,19 @@ public class MenuController {
 	             */
     @RequestMapping("/menus")
     public List<Menu> menus() {
-        List<Resource> resources = resourceRepository.findByCurrentUser();
+        User user = this.userRepository.findCurrentUser();
+        List<Resource> resources = this.resourceRepository.findByCurrentUser();
 //        List<Resource> rootMenus = resources.stream()
 //                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
 
         Menu menu = new Menu();
+        if(user.getIsAdmin().equals("Y")){
+            menu.setRoleRes(this.resourceRepository.findAll());
+        }
+        else {
+            menu.setRoleRes(this.userRepository.findCurrentUser().getRoles().get(0).getResources());
+        }
+
         menu.buildMenu(menu, resources);
         return menu.getChildren();
     }

@@ -8,10 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ResourceRepository extends JpaRepository<Resource, Long> {
+public interface ResourceRepository extends CrudRepository<Resource, Long> {
 
     @Override
     Resource save(@Param("resource") Resource resource);
+
+    @Override
+    List<Resource> findAll();
 
     @Query("select r from Resource r inner join r.roles role where r.parentId is null and role.id in (select ur.id from User u inner join u.roles ur where u.username = ?#{principal.username})")
     List<Resource> findByCurrentUser();
