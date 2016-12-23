@@ -1,7 +1,7 @@
 logs/
 dist/
 node_modules/
-application.yml
+/src/main/resources/application.yml
 
 ### STS ###
 .classpath
@@ -20,4 +20,3 @@ nbproject/private/
 nbbuild/
 nbdist/
 .nb-gradle/
-
