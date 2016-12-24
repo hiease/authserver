@@ -54,11 +54,18 @@ public class UserController {
         return;
     }
 
-    @RequestMapping("/api/updatePasswd")
-    public ResponseEntity<?> updatePasswd(@RequestBody String passwd) {
+    @RequestMapping("/api/updateUserPasswd")
+    public ResponseEntity<?> updateUserPasswd(@RequestBody String passwd) {
         JSONObject jsonObject = new JSONObject(passwd);
         this.userRepository.updateUserPasswd(User.PASSWORD_ENCODER.encode(jsonObject.getString("userPass")));
         return ResponseEntity.ok().body("{ \"result\": { \"success\": true, \"error\": null } }");
     }
 
+    @RequestMapping("/api/resetUserPasswd")
+    public ResponseEntity<?> resetUserPasswd(@RequestBody String user) {
+        JSONObject jsonObject = new JSONObject(user);
+        String username = jsonObject.getString("username");
+        this.userRepository.updatePasswdByUsername(username, User.PASSWORD_ENCODER.encode(username));
+        return ResponseEntity.ok().body("{ \"result\": { \"success\": true, \"error\": null } }");
+    }
 }
