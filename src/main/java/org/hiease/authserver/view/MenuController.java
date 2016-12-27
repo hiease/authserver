@@ -48,23 +48,38 @@ public class MenuController {
 	             */
     @RequestMapping("/menus")
     public List<Menu> menus() {
+
         User user = this.userRepository.findCurrentUser();
-        List<Resource> resources = this.resourceRepository.findByCurrentUser();
-        List<Resource> roleRes = new ArrayList<>();
-        List<Role> roles = this.userRepository.findCurrentUser().getRoles();
-        roles.forEach((role) -> {
-            roleRes.addAll(role.getResources());
-        });
+
+        List<Resource> resources;
+
+        if (!StringUtils.isEmpty(user.getIsAdmin()) && user.getIsAdmin().equals("Y")) {
+            resources = this.resourceRepository.findAll();
+        } else {
+            List<Resource> res = new ArrayList<>();
+            this.userRepository.findCurrentUser().getRoles().forEach((role) -> {
+                res.addAll(role.getResources());
+            });
+            resources = res.stream().distinct().collect(Collectors.toList());
+        }
+//        if= this.resourceRepository.findByCurrentUser();
+//        List<Resource> roleRes = new ArrayList<>();
+//        List<Role> roles = this.userRepository.findCurrentUser().getRoles();
+//        roles.forEach((role) -> {
+//            roleRes.addAll(role.getResources());
+//        });
 
 //        List<Resource> rootMenus = resources.stream()
 //                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
 
         Menu menu = new Menu();
-        if (!StringUtils.isEmpty(user.getIsAdmin()) && user.getIsAdmin().equals("Y")) {
-            menu.setRoleRes(this.resourceRepository.findAll());
-        } else {
-            menu.setRoleRes(roleRes);
-        }
+//        if (!StringUtils.isEmpty(user.getIsAdmin()) && user.getIsAdmin().equals("Y")) {
+//            menu.setRoleRes(this.resourceRepository.findAll());
+//        } else {
+//            menu.setRoleRes(roleRes);
+//        }
+
+
 
         menu.buildMenu(menu, resources);
         return menu.getChildren();

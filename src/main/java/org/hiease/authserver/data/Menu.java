@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by qihaiyan on 2016/11/1.
@@ -19,9 +21,6 @@ enum MenuType {
 @NoArgsConstructor
 public class Menu {
 
-//    @Autowired
-//    UserRepository userRepository;
-
     private Long id;
 
     private String name;
@@ -31,14 +30,6 @@ public class Menu {
     protected List<Resource> roleResources;
 
     private List<Menu> children = new ArrayList<>();
-
-    public void setRoleRes(List<Resource> resources){
-        this.roleResources = resources;
-    }
-
-//    public List<Resource> getRoleRes(){
-//        return this.roleResources;
-//    }
 
     public Long getId() {
         return id;
@@ -70,29 +61,22 @@ public class Menu {
 
     public void buildMenu(Menu parent, List<Resource> resources) {
 
-//        this.roleResources = this.userRepository.findCurrentUser().getRoles().get(0).getResources();
-
-        for (Resource resource : resources) {
+        resources.stream()
+                .filter(res -> res.getParentId() == null).forEach(resource -> {
             Menu headMenu = new HeadMenu();
-            headMenu.setRoleRes(this.roleResources);
             headMenu.setId(resource.getId());
             headMenu.setName(resource.getName());
-            headMenu.buildMenu(headMenu, resource.getChildren());
+            headMenu.buildMenu(
+                    headMenu,
+                    resources.stream()
+                            .filter(res -> Objects.equals(res.getParentId(), resource.getId())).collect(Collectors.toList())
+            );
             this.addChildren(headMenu);
-        }
+        });
     }
 
     public void addChildren(Menu child) {
         children.add(child);
-    }
-
-    public boolean isRoleMenu(Resource resource, List<Resource> roleResources){
-        for (Resource roleRes : roleResources) {
-            if (roleRes.getId().equals(resource.getId())){
-                return true;
-            }
-        }
-        return false;
     }
 }
 
@@ -108,21 +92,20 @@ class HeadMenu extends Menu {
 
     @Override
     public void buildMenu(Menu parent, List<Resource> resources) {
-        for (Resource resource : resources) {
-            if (resource == null) continue;
-            if (!isRoleMenu(resource, this.roleResources)) continue;
+        resources.forEach(resource -> {
             if (resource.getChildren().size() > 0) {
                 Menu toggleMenu = new ToggleMenu();
-                toggleMenu.setRoleRes(this.roleResources);
                 toggleMenu.setId(resource.getId());
                 toggleMenu.setName(resource.getName());
-                toggleMenu.buildMenu(toggleMenu, resource.getChildren());
+                toggleMenu.buildMenu(
+                        toggleMenu,
+                        resources.stream().filter(res -> Objects.equals(res.getParentId(), resource.getId())).collect(Collectors.toList()));
                 this.addChildren(toggleMenu);
             } else {
                 Menu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
                 this.addChildren(pageMenu);
             }
-        }
+        });
     }
 
     public void addChildren(Menu child) {
@@ -143,7 +126,6 @@ class ToggleMenu extends Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
-            if (!isRoleMenu(resource, this.roleResources)) continue;
             PageMenu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
             this.addPages(pageMenu);
         }
@@ -158,6 +140,7 @@ class ToggleMenu extends Menu {
 @Setter
 @ToString
 class PageMenu extends Menu {
+
     private final MenuType type = MenuType.link;
     private String url;
 
