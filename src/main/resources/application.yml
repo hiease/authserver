@@ -4,7 +4,7 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework.security: DEBUG
+#    org.springframework.security: DEBUG
   path: ./logs
 security:
 #  oauth2:

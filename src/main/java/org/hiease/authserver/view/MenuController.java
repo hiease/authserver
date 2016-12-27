@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,15 +50,20 @@ public class MenuController {
     public List<Menu> menus() {
         User user = this.userRepository.findCurrentUser();
         List<Resource> resources = this.resourceRepository.findByCurrentUser();
+        List<Resource> roleRes = new ArrayList<>();
+        List<Role> roles = this.userRepository.findCurrentUser().getRoles();
+        roles.forEach((role) -> {
+            roleRes.addAll(role.getResources());
+        });
+
 //        List<Resource> rootMenus = resources.stream()
 //                .filter(resource -> resource.getParentId() == null).collect(Collectors.toList());
 
         Menu menu = new Menu();
-        if( !StringUtils.isEmpty(user.getIsAdmin()) && user.getIsAdmin().equals("Y")){
+        if (!StringUtils.isEmpty(user.getIsAdmin()) && user.getIsAdmin().equals("Y")) {
             menu.setRoleRes(this.resourceRepository.findAll());
-        }
-        else {
-            menu.setRoleRes(this.userRepository.findCurrentUser().getRoles().get(0).getResources());
+        } else {
+            menu.setRoleRes(roleRes);
         }
 
         menu.buildMenu(menu, resources);

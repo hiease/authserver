@@ -17,30 +17,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-//@RestController
 @SessionAttributes("authorizationRequest")
-//@EnableResourceServer
 public class AuthServerApplication {
-
-//    @Autowired
-//    private static MyLogoutSuccessHandler logoutSuccessHandler;
-
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/login").setViewName("login");
-//        registry.addViewController("/oauth/confirm_access").setViewName("authorize");
-//        registry.addViewController("/oauth/error").setViewName("oauth_error");
-//    }
-
-//    @Configuration
-//    @EnableResourceServer
-//    protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-//        @Override
-//        public void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .antMatcher("/user").authorizeRequests().anyRequest().authenticated();
-//        }
-//    }
 
     public static void main(String[] args) {
         SpringApplication.run(AuthServerApplication.class, args);

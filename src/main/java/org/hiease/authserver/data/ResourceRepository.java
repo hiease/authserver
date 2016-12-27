@@ -14,7 +14,7 @@ public interface ResourceRepository extends CrudRepository<Resource, Long> {
     @Override
     List<Resource> findAll();
 
-    @Query("select r from Resource r inner join r.roles role where r.parentId is null and role.id in (select ur.id from User u inner join u.roles ur where u.username = ?#{principal.username})")
+    @Query("select distinct r from Resource r inner join r.roles role where r.parentId is null and role.id in (select ur.id from User u inner join u.roles ur where u.username = ?#{principal.username})")
     List<Resource> findByCurrentUser();
 
     @Query("select r from Resource r inner join r.roles role where role.id = ?1")
