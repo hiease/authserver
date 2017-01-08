@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
+
 /**
  * Created by qihaiyan on 2016/11/1.
  */
@@ -24,6 +26,8 @@ public class Menu {
     private Long id;
 
     private String name;
+
+    private String icon;
 
     private MenuType type;
 
@@ -55,6 +59,14 @@ public class Menu {
         this.type = type;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public List<Menu> getChildren() {
         return children;
     }
@@ -69,7 +81,7 @@ public class Menu {
             headMenu.buildMenu(
                     headMenu,
                     resources.stream()
-                            .filter(res -> Objects.equals(res.getParentId(), resource.getId())).collect(Collectors.toList())
+                            .filter(res -> Objects.equals(res.getParentId(), resource.getId())).sorted(comparing(Resource::getShowOrder)).collect(Collectors.toList())
             );
             this.addChildren(headMenu);
         });
@@ -102,7 +114,7 @@ class HeadMenu extends Menu {
                         resources.stream().filter(res -> Objects.equals(res.getParentId(), resource.getId())).collect(Collectors.toList()));
                 this.addChildren(toggleMenu);
             } else {
-                Menu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
+                Menu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl(), resource.getIcon());
                 this.addChildren(pageMenu);
             }
         });
@@ -126,7 +138,7 @@ class ToggleMenu extends Menu {
     public void buildMenu(Menu parent, List<Resource> resources) {
         for (Resource resource : resources) {
             if (resource == null) continue;
-            PageMenu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl());
+            PageMenu pageMenu = new PageMenu(resource.getId(), resource.getName(), resource.getUrl(), resource.getIcon());
             this.addPages(pageMenu);
         }
     }
@@ -144,9 +156,10 @@ class PageMenu extends Menu {
     private final MenuType type = MenuType.link;
     private String url;
 
-    PageMenu(Long id, String name, String url) {
+    PageMenu(Long id, String name, String url, String icon) {
         this.setId(id);
         this.setName(name);
         this.setUrl(url);
+        this.setIcon(icon);
     }
 }
