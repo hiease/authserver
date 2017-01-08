@@ -17,11 +17,11 @@ spring:
   application:
     name: authserver
   datasource:
-    url: jdbc:mysql://123.207.152.115:3306/portal?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/portal?characterEncoding=utf-8&useSSL=false
     testWhileIdle: true
     validationQuery: SELECT 1
     username: portal
-    password: Pp123456
+    password: portal
     driverClassName: com.mysql.jdbc.Driver
   jpa:
     database: MYSQL
