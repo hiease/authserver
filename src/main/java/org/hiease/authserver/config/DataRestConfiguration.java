@@ -1,6 +1,7 @@
 package org.hiease.authserver.config;
 
 import org.hiease.authserver.data.Department;
+import org.hiease.authserver.data.Organization;
 import org.hiease.authserver.data.Resource;
 import org.hiease.authserver.data.Role;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ public class DataRestConfiguration {
                 config.exposeIdsFor(Resource.class);
                 config.exposeIdsFor(Department.class);
                 config.exposeIdsFor(Role.class);
+                config.exposeIdsFor(Organization.class);
             }
         };
     }

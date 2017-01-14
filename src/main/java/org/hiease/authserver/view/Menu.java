@@ -1,7 +1,7 @@
-package org.hiease.authserver.data;
+package org.hiease.authserver.view;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hiease.authserver.data.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
