@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@ToString(exclude = {"password", "roles"})
+@ToString(exclude = {"password", "department", "roles"})
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class User extends AbstractEntity {
@@ -22,12 +22,15 @@ public class User extends AbstractEntity {
     private String status;
     private String email;
     private String mobile;
-    private String department;
     private String isAdmin;
     private String avatar;
 
     @JsonIgnore
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name="department")
+    private Department department;
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),

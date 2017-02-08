@@ -6,20 +6,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"organization"})
 @Entity
 @NoArgsConstructor
 public class Department extends AbstractEntity {
     private String name;
     private Long level;
     private Long parentId;
-//    private Long orgId;
     private String type;
     private String province;
     private String city;
