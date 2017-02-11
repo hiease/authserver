@@ -20,4 +20,7 @@ public interface UserProjection {
 
     @Value("#{target.department}")
     Department getDepartment();
+
+    @Value("#{target.department.organization}")
+    Organization getOrganization();
 }

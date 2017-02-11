@@ -1,5 +1,8 @@
 package org.hiease.authserver.view;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
+import org.hiease.authserver.data.Department;
+import org.hiease.authserver.data.Organization;
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
 import org.hiease.authserver.security.CurrentUser;
@@ -20,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by qihaiyan on 2016/11/13.
@@ -52,6 +59,33 @@ public class UserController {
         response.sendRedirect(redirectUrl);
 
         return;
+    }
+
+    private List<String> getDataOrg(List<Organization> orgs) {
+        List<String> dataorgs = new ArrayList<>();
+        for (Organization org : orgs) {
+            dataorgs.add(org.getId().toString());
+            if (org.getChildren().size() > 0) {
+                dataorgs.addAll(getDataOrg(org.getChildren()));
+            }
+        }
+//        orgs.forEach((org) -> {
+//            dataorgs.add(org.getId().toString());
+//            if (org.getChildren().size() > 0) {
+//                getDataOrg(org.getChildren());
+//            }
+//        });
+        return dataorgs;
+    }
+
+    @RequestMapping("/api/findCurrentUserDataOrg")
+    public ResponseEntity findCurrentUserOrg() {
+        User user = this.userRepository.findCurrentUser();
+        Organization userOrg = user.getDepartment().getOrganization();
+        List<Organization> childOrgs = userOrg.getChildren().stream().filter((u) -> u.getId() != userOrg.getId()).collect(Collectors.toList());
+        List<String> dataorgs = this.getDataOrg(childOrgs);
+        dataorgs.add(userOrg.getId().toString());
+        return ResponseEntity.ok().body(dataorgs.toString());
     }
 
     @RequestMapping("/api/updateUserPasswd")

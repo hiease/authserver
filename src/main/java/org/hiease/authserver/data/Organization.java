@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-//@ToString(exclude = "children")
+@ToString(exclude = "children")
 @Entity
 @NoArgsConstructor
 public class Organization extends AbstractEntity {
@@ -29,6 +29,6 @@ public class Organization extends AbstractEntity {
 //    @OneToMany(mappedBy="organization")
 //    private List<Department> departments;
 
-//    @OneToMany(mappedBy="parentId")
-//    private List<Organization> children = new LinkedList<Organization>();
+    @OneToMany(mappedBy="parentId")
+    private List<Organization> children = new LinkedList<Organization>();
 }
