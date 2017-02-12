@@ -1,16 +1,12 @@
 package org.hiease.authserver.data;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString(exclude = "resources")
+@Data
+@ToString(exclude = {"users", "resources"})
 @Entity
 @NoArgsConstructor
 public class Role extends AbstractEntity {
@@ -27,4 +23,7 @@ public class Role extends AbstractEntity {
     @JoinTable(name="role_resource",joinColumns=@JoinColumn(name="role_id"),
             inverseJoinColumns=@JoinColumn(name="resource_id"))
     private List<Resource> resources;
+
+    public Role(String reference) {
+    }
 }

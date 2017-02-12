@@ -12,7 +12,4 @@ import java.util.UUID;
 public interface DepartmentRepository extends CrudRepository<Department, Long> {
 //    @Override
 //    Department save(@Param("department") Department department);
-
-//    @Override
-//    List<Department> findAll();
 }
