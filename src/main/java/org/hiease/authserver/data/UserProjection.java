@@ -18,9 +18,8 @@ public interface UserProjection {
      String getIsAdmin();
      String getAvatar();
 
-    @Value("#{target.department}")
     Department getDepartment();
 
-    @Value("#{target.department.organization}")
+    @Value("#{target.department != null ? target.department.organization : null}")
     Organization getOrganization();
 }
