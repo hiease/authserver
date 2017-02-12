@@ -1,18 +1,11 @@
 package org.hiease.authserver.view;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
-import org.hiease.authserver.data.Department;
 import org.hiease.authserver.data.Organization;
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
-import org.hiease.authserver.security.CurrentUser;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +18,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
