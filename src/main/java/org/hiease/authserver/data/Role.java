@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString(exclude = {"users", "resources"})
 @Entity
 @NoArgsConstructor
