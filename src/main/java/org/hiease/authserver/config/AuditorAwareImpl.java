@@ -6,12 +6,14 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Optional;
+
 public class AuditorAwareImpl implements AuditorAware<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuditorAwareImpl.class);
 
     @Override
-    public String getCurrentAuditor() {
+    public Optional<String> getCurrentAuditor() {
         LOGGER.debug("Getting the username of authenticated user.");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -23,7 +25,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         LOGGER.debug("Returning username: {}", user.getUsername());
 
-        return user.getUsername();
+        return Optional.ofNullable(user.getUsername());
     }
 }
 
