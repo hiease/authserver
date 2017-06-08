@@ -1,6 +1,5 @@
 package org.hiease.authserver.view;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hiease.authserver.data.Organization;
@@ -63,12 +62,6 @@ public class UserController {
                 dataorgs.addAll(getDataOrg(org.getChildren()));
             }
         }
-//        orgs.forEach((org) -> {
-//            dataorgs.add(org.getId().toString());
-//            if (org.getChildren().size() > 0) {
-//                getDataOrg(org.getChildren());
-//            }
-//        });
         return dataorgs;
     }
 

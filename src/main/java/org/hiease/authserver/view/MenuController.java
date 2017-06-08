@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Comparator.comparing;
-
 /**
  * Created by qihaiyan on 2016/11/1.
  */
