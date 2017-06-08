@@ -1,9 +1,10 @@
 package org.hiease.authserver.view;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hiease.authserver.data.Organization;
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
@@ -61,12 +62,6 @@ public class UserController {
                 dataorgs.addAll(getDataOrg(org.getChildren()));
             }
         }
-//        orgs.forEach((org) -> {
-//            dataorgs.add(org.getId().toString());
-//            if (org.getChildren().size() > 0) {
-//                getDataOrg(org.getChildren());
-//            }
-//        });
         return dataorgs;
     }
 
@@ -81,16 +76,18 @@ public class UserController {
     }
 
     @RequestMapping("/api/updateUserPasswd")
-    public ResponseEntity<?> updateUserPasswd(@RequestBody String passwd) {
-        JSONObject jsonObject = new JSONObject(passwd);
-        this.userRepository.updateUserPasswd(User.PASSWORD_ENCODER.encode(jsonObject.getString("userPass")));
+    public ResponseEntity<?> updateUserPasswd(@RequestBody String passwd) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(passwd).get("userPass");
+        this.userRepository.updateUserPasswd(User.PASSWORD_ENCODER.encode(jsonNode.textValue()));
         return ResponseEntity.ok().body("{ \"result\": { \"success\": true, \"error\": null } }");
     }
 
     @RequestMapping("/api/resetUserPasswd")
-    public ResponseEntity<?> resetUserPasswd(@RequestBody String user) {
-        JSONObject jsonObject = new JSONObject(user);
-        String username = jsonObject.getString("username");
+    public ResponseEntity<?> resetUserPasswd(@RequestBody String user) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(user).get("username");
+        String username = jsonNode.textValue();
         this.userRepository.updatePasswdByUsername(username, User.PASSWORD_ENCODER.encode(username));
         return ResponseEntity.ok().body("{ \"result\": { \"success\": true, \"error\": null } }");
     }

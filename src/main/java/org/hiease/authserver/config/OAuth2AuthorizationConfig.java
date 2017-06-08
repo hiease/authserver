@@ -60,7 +60,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .secret("acmesecret")
                 .authorities("ROLE_TRUSTED_CLIENT")
                 .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
-                .accessTokenValiditySeconds(36000)
+                .accessTokenValiditySeconds(60*60*24)
                 .scopes("openid")
 //                .resourceIds("authserver")
                 .autoApprove(true);
@@ -75,7 +75,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer
-                .tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_TRUSTED_CLIENT')")
+                .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
     }
 }
