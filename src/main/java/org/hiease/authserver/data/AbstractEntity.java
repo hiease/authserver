@@ -21,10 +21,6 @@ import java.util.UUID;
 public abstract class AbstractEntity {
 
     @Id
-//    @GeneratedValue(generator="system-uuid")
-//    @GenericGenerator(name="system-uuid", strategy = "uuid2")
-//    String id;
-//    final UUID id = UUID.randomUUID();
     @GeneratedValue Long id;
 
     @CreatedBy
