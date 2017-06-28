@@ -23,6 +23,6 @@ public class Department extends AbstractEntity {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name="org_id")
-    private Organization organization;
+    @JoinColumn(name="branch_id")
+    private Branch branch;
 }

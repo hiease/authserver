@@ -55,15 +55,16 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("acme")
-                .secret("acmesecret")
-                .authorities("ROLE_TRUSTED_CLIENT")
-                .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
-                .accessTokenValiditySeconds(60*60*24)
-                .scopes("openid")
+        clients.jdbc(dataSource);
+//                .inMemory()
+//                .withClient("acme")
+//                .secret("acmesecret")
+//                .authorities("ROLE_TRUSTED_CLIENT")
+//                .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
+//                .accessTokenValiditySeconds(60*60*24)
+//                .scopes("openid")
 //                .resourceIds("authserver")
-                .autoApprove(true);
+//                .autoApprove(true);
     }
 
 

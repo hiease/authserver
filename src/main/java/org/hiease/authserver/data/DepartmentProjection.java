@@ -13,5 +13,5 @@ public interface DepartmentProjection {
     String getName();
 
     @Value("#{target.organization}")
-    Organization getOrganization();
+    Branch getOrganization();
 }

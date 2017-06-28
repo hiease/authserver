@@ -2,7 +2,7 @@ package org.hiease.authserver.view;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hiease.authserver.data.Organization;
+import org.hiease.authserver.data.Branch;
 import org.hiease.authserver.data.User;
 import org.hiease.authserver.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +54,9 @@ public class UserController {
         return;
     }
 
-    private List<String> getDataOrg(List<Organization> orgs) {
+    private List<String> getDataOrg(List<Branch> orgs) {
         List<String> dataorgs = new ArrayList<>();
-        for (Organization org : orgs) {
+        for (Branch org : orgs) {
             dataorgs.add(org.getId().toString());
             if (org.getChildren().size() > 0) {
                 dataorgs.addAll(getDataOrg(org.getChildren()));
@@ -68,10 +68,10 @@ public class UserController {
     @RequestMapping("/api/findCurrentUserDataOrg")
     public ResponseEntity findCurrentUserOrg() {
         User user = this.userRepository.findCurrentUser();
-        Organization userOrg = user.getDepartment().getOrganization();
-        List<Organization> childOrgs = userOrg.getChildren().stream().filter((u) -> u.getId() != userOrg.getId()).collect(Collectors.toList());
+        Branch branchs = user.getDepartment().getBranch();
+        List<Branch> childOrgs = branchs.getChildren().stream().filter((u) -> u.getId() != branchs.getId()).collect(Collectors.toList());
         List<String> dataorgs = this.getDataOrg(childOrgs);
-        dataorgs.add(userOrg.getId().toString());
+        dataorgs.add(branchs.getId().toString());
         return ResponseEntity.ok().body(dataorgs.toString());
     }
 

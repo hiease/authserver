@@ -20,6 +20,6 @@ public interface UserProjection {
 
     Department getDepartment();
 
-    @Value("#{target.department != null ? target.department.organization : null}")
-    Organization getOrganization();
+    @Value("#{target.department != null ? target.department.branch : null}")
+    Branch getBranch();
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @ToString(exclude = "children")
 @Entity
 @NoArgsConstructor
-public class Organization extends AbstractEntity {
+public class Branch extends AbstractEntity {
     private String code;
     private String name;
     private Long level;
@@ -30,5 +30,5 @@ public class Organization extends AbstractEntity {
 //    private List<Department> departments;
 
     @OneToMany(mappedBy="parentId")
-    private List<Organization> children = new LinkedList<Organization>();
+    private List<Branch> children = new LinkedList<Branch>();
 }
