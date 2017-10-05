@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString(exclude = {"organization"})
+@ToString(exclude = {"branch"})
 @Entity
 @NoArgsConstructor
 public class Department extends AbstractEntity {

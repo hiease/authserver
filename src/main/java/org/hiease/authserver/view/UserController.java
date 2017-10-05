@@ -68,10 +68,10 @@ public class UserController {
     @RequestMapping("/api/findCurrentUserDataOrg")
     public ResponseEntity findCurrentUserOrg() {
         User user = this.userRepository.findCurrentUser();
-        Branch branchs = user.getDepartment().getBranch();
-        List<Branch> childOrgs = branchs.getChildren().stream().filter((u) -> u.getId() != branchs.getId()).collect(Collectors.toList());
+        Branch rootBranch = user.getDepartment().getBranch();
+        List<Branch> childOrgs = rootBranch.getChildren().stream().filter((u) -> u.getId() != rootBranch.getId()).collect(Collectors.toList());
         List<String> dataorgs = this.getDataOrg(childOrgs);
-        dataorgs.add(branchs.getId().toString());
+        dataorgs.add(rootBranch.getId().toString());
         return ResponseEntity.ok().body(dataorgs.toString());
     }
 
